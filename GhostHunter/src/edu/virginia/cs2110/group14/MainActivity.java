@@ -1,6 +1,7 @@
 package edu.virginia.cs2110.group14;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//test2
 		super.onCreate(savedInstanceState);
+		Intent splash = new Intent(this, SplashScreen.class);
+		startActivity(splash);
 		setContentView(R.layout.activity_main);
 	}
 
