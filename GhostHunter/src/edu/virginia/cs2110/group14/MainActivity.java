@@ -10,10 +10,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//test2
 		super.onCreate(savedInstanceState);
-		Intent splash = new Intent(this, SplashScreen.class);
-		startActivity(splash);
 		setContentView(R.layout.activity_main);
 	}
 

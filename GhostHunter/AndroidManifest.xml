@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.virginia.cs2110.group14"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0"
+    android:screenOrientation="landscape" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -13,20 +14,23 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name="edu.virginia.cs2110.group14.MainActivity"
+            android:screenOrientation="landscape" >
+        </activity>
+        
+        <activity
+            android:name="edu.virginia.cs2110.group14.SplashScreen"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         
-        <activity
-            android:name="SplashScreen"
-            android:label="@string/splash_screen" >
-            </activity>
      </application>
 
 </manifest>

@@ -6,6 +6,6 @@
     <string name="action_settings">Settings</string>
     <string name="splash_screen">Splash Screen</string>
     <string name="splash_screen_title">Ghost Hunter</string>
-    <string name="splash_screen_info">Brian Team (dot4qu), Leah Walter (ldw8fb), Byung Eun Shin (bs5sk), Ryan Bannon (rtb7rd)</string>
+    <string name="splash_screen_info">CS 2110\nBrian Team (dot4qu), Leah Walter (ldw8fb), Byung Eun Shin (bs5sk), Ryan Bannon (rtb7rd)</string>
 
 </resources>
