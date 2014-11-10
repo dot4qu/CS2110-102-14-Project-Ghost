@@ -17,6 +17,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		final ImageView image = (ImageView) findViewById(R.id.ghostbuster);
 		Button up = (Button) findViewById(R.id.button1);
 		up.setOnClickListener(new View.OnClickListener() {
 			
@@ -26,6 +27,8 @@ public class MainActivity extends Activity {
 				Animation anup = new TranslateAnimation(0,0,0,-500);
 				anup.setDuration(1000);
 				anup.setFillAfter(true);
+				
+				image.startAnimation(anup);
 			}
 		});
 		Button down = (Button) findViewById(R.id.button4);
@@ -37,7 +40,8 @@ public class MainActivity extends Activity {
 				Animation andown = new TranslateAnimation(0,0,0,500);
 				andown.setDuration(1000);
 				andown.setFillAfter(true);
-			
+				
+				image.startAnimation(andown);
 			}
 		});
 		Button right = (Button) findViewById(R.id.button2);
@@ -50,6 +54,7 @@ public class MainActivity extends Activity {
 				anright.setDuration(1000);
 				anright.setFillAfter(true);
 				
+				image.startAnimation(anright);
 			}
 		});
 		Button left = (Button) findViewById(R.id.button3);
@@ -62,6 +67,7 @@ public class MainActivity extends Activity {
 				anleft.setDuration(1000);
 				anleft.setFillAfter(true);
 				
+				image.startAnimation(anleft);
 			}
 		});
 	}
