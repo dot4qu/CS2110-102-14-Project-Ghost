@@ -3,6 +3,7 @@ package edu.virginia.cs2110.group14;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,14 +11,20 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import edu.virginia.cs2110.group14.*;
 
 public class MainActivity extends Activity {
 
+	private Handler frame = new Handler();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		final ImageView image = (ImageView) findViewById(R.id.ghostbuster);
+		
+		//beginning of UP button implementation
 		Button up = (Button) findViewById(R.id.button1);
 		up.setOnClickListener(new View.OnClickListener() {
 			
@@ -31,6 +38,8 @@ public class MainActivity extends Activity {
 				image.startAnimation(anup);
 			}
 		});
+		
+		//beginning of DOWN button implementation
 		Button down = (Button) findViewById(R.id.button4);
 		down.setOnClickListener(new View.OnClickListener() {
 			
@@ -44,6 +53,8 @@ public class MainActivity extends Activity {
 				image.startAnimation(andown);
 			}
 		});
+		
+		//beginning of RIGHT button implementation
 		Button right = (Button) findViewById(R.id.button2);
 		right.setOnClickListener(new View.OnClickListener() {
 			
@@ -57,6 +68,8 @@ public class MainActivity extends Activity {
 				image.startAnimation(anright);
 			}
 		});
+		
+		//beginning of LEFT button implementation
 		Button left = (Button) findViewById(R.id.button3);
 		left.setOnClickListener(new View.OnClickListener() {
 			
@@ -72,6 +85,29 @@ public class MainActivity extends Activity {
 		});
 	}
 
+	
+	
+	private Runnable updateScreen = new Runnable() {
+		
+		//MAKE ANY SCREEN UPDATES THAT NEED TO HAPPEN EACH FRAME WITHIN run()
+		//this means things like redrawing sprites in a different place to make
+		// move
+		@Override
+		public void run() {
+			frame.removeCallbacks(updateScreen);
+			//this resets the canvas, re-calling onDraw
+			((GameScreen)findViewById(R.id.game_canvas)).invalidate();
+			
+			frame.postDelayed(updateScreen, 1000);
+		}
+	};
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

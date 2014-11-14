@@ -59,6 +59,9 @@
         android:layout_toLeftOf="@+id/button2"
         android:text="Down" />
 
-     
+     <edu.virginia.cs2110.group14.GameScreen
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@+id/game_canvas" />
 
 </RelativeLayout>
