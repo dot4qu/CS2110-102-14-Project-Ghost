@@ -17,7 +17,7 @@ import android.view.View;
 
 
 public class GameScreen extends View {
-
+	
 	private Paint paint;
 	
 	//maintains ghost position
@@ -26,6 +26,9 @@ public class GameScreen extends View {
 	
 	//holds ghost picture
 	private Bitmap ghost1bm = null;
+	
+	//used for ghost position
+	int x, y;
 	
 	//ghost position getters and setters
 	public void setGhost1(Point p) {
@@ -67,7 +70,20 @@ public class GameScreen extends View {
 	//giving it the effect of animation
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawBitmap(ghost1bm, ghost1.x, ghost1.y, null);
+		//to move and keep ghost on screen
+		if (x<canvas.getWidth()){
+			x += 3;
+		} else {
+			x = 0;
+		}
+		if (y<canvas.getHeight()) {
+			y += 3;
+		} else {
+			y= 0;
+		}
+		
+		canvas.drawBitmap(ghost1bm, x, y, new Paint());
+		invalidate();
 	}
 	
 	
