@@ -2,6 +2,7 @@ package edu.virginia.cs2110.group14;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -21,7 +22,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		//Music
+		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
+		gameMusic.start();
 		final ImageView image = (ImageView) findViewById(R.id.ghostbuster);
 		
 		//beginning of UP button implementation
