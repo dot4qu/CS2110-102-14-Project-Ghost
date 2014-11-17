@@ -20,6 +20,9 @@ public class GameScreen extends View {
 	
 	private Paint paint;
 	
+	private int drawDelay = 0;
+	private int numGhosts = 0;
+	
 	//maintains ghost position
 	private Rect ghost1Bounds = new Rect(0,0,0,0);
 	private Point ghost1;
@@ -57,10 +60,17 @@ public class GameScreen extends View {
 		paint = new Paint();
 		
 		//setting the ghost sprite at an arbitrary location for testing
-		ghost1 = new Point(1,1);
+		ghost1 = randomPointGenerator();
 		ghost1bm = BitmapFactory.decodeResource(getResources(), R.drawable.ghost);
 		//updates sprite bounds
 		ghost1Bounds = new Rect(0, 0, ghost1bm.getWidth(), ghost1bm.getHeight());
+	}
+	
+	public Point randomPointGenerator() {
+		int x = (int) Math.random() * findViewById(R.id.game_canvas).getWidth();
+		int y = (int) Math.random() * findViewById(R.id.game_canvas).getHeight();
+		Point p = new Point(x, y);
+		return p;
 	}
 	
 	
@@ -82,7 +92,12 @@ public class GameScreen extends View {
 			y= 0;
 		}
 		
+		//only draws a new ghost every 5000 frames, never draws more than 9 ghosts
+		if (drawDelay == 5000 && numGhosts < 10) {
 		canvas.drawBitmap(ghost1bm, x, y, new Paint());
+		numGhosts++;
+		}
+		drawDelay++;
 		invalidate();
 	}
 	
