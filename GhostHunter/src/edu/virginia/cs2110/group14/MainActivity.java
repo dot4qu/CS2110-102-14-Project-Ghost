@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import edu.virginia.cs2110.group14.*;
 
 public class MainActivity extends Activity {
@@ -33,12 +34,10 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Animation anup = new TranslateAnimation(0,0,0,-500);
-				anup.setDuration(1000);
-				anup.setFillAfter(true);
-				
-				image.startAnimation(anup);
+				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
+		                image.getLayoutParams();
+		                mParams.topMargin -= 50;
+		                image.setLayoutParams(mParams);
 			}
 		});
 		
@@ -48,12 +47,10 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Animation andown = new TranslateAnimation(0,0,0,500);
-				andown.setDuration(1000);
-				andown.setFillAfter(true);
-				
-				image.startAnimation(andown);
+				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
+		                image.getLayoutParams();
+		                mParams.topMargin += 50;
+		                image.setLayoutParams(mParams);
 			}
 		});
 		
@@ -63,12 +60,10 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Animation anright = new TranslateAnimation(0,500,0,0);
-				anright.setDuration(1000);
-				anright.setFillAfter(true);
-				
-				image.startAnimation(anright);
+				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
+		                image.getLayoutParams();
+		                mParams.leftMargin += 50;
+		                image.setLayoutParams(mParams);
 			}
 		});
 		
@@ -78,12 +73,10 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Animation anleft = new TranslateAnimation(0,-500,0,0);
-				anleft.setDuration(1000);
-				anleft.setFillAfter(true);
-				
-				image.startAnimation(anleft);
+				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
+		                image.getLayoutParams();
+		                mParams.leftMargin -= 50;
+		                image.setLayoutParams(mParams);
 			}
 		});
 	}
