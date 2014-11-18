@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/ghost_logo" >
     
     <TextView 
         android:layout_width="fill_parent"
@@ -10,25 +11,17 @@
         android:gravity="center_horizontal"
         android:textSize="50sp"
         android:text="@string/splash_screen_title"
+        android:textColor="#ff0000"
         android:paddingTop="10dp"/>
-    
-    <ImageView
-        android:id="@+id/ghost_logo"
-        android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scaleType="fitXY"
-        android:src="@drawable/ghost_logo" 
-        android:layout_gravity="center"/>
-    
-    <TextView 
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="15dp"
+        android:gravity="bottom|center_horizontal"
         android:paddingBottom="10dp"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="@string/splash_screen_info"/>
-    
+        android:paddingTop="280dp"
+        android:text="@string/splash_screen_info"
+        android:textColor="#ff0000"
+        android:textSize="20sp" />
 
 </LinearLayout>
