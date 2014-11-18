@@ -38,6 +38,8 @@ public class MainActivity extends Activity {
 		                image.getLayoutParams();
 		                mParams.topMargin -= 50;
 		                image.setLayoutParams(mParams);
+		                
+		                // CHANGE TEST
 			}
 		});
 		
