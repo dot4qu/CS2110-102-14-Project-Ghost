@@ -22,6 +22,8 @@ public class MainActivity extends Activity {
 
 	private Handler frame = new Handler();
 	private ImageView ghost;
+	private ImageView ghostBuster;
+	private Runnable r;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,10 @@ public class MainActivity extends Activity {
 		//Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
 		gameMusic.start();
-		final ImageView image = (ImageView) findViewById(R.id.ghostbuster);
+		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
+		ghost = (ImageView) findViewById(R.id.ghostID);
+		Ghost ghost1 = new Ghost(ghost);
+		runOverall();
 		
 		//beginning of UP button implementation
 		Button up = (Button) findViewById(R.id.button1);
@@ -39,9 +44,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
-		                image.getLayoutParams();
+		                ghostBuster.getLayoutParams();
 		                mParams.topMargin -= 50;
-		                image.setLayoutParams(mParams);
+		                ghostBuster.setLayoutParams(mParams);
 
 			}
 		});
@@ -53,9 +58,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
-		                image.getLayoutParams();
+		                ghostBuster.getLayoutParams();
 		                mParams.topMargin += 50;
-		                image.setLayoutParams(mParams);
+		                ghostBuster.setLayoutParams(mParams);
 			}
 		});
 		
@@ -66,9 +71,9 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
-		                image.getLayoutParams();
+		                ghostBuster.getLayoutParams();
 		                mParams.leftMargin += 50;
-		                image.setLayoutParams(mParams);
+		                ghostBuster.setLayoutParams(mParams);
 			}
 		});
 		
@@ -79,27 +84,30 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) 
-		                image.getLayoutParams();
+		                ghostBuster.getLayoutParams();
 		                mParams.leftMargin -= 50;
-		                image.setLayoutParams(mParams);
+		                ghostBuster.setLayoutParams(mParams);
 			}
 		});
-	}
-
-	
-	
-	private Runnable updateScreen = new Runnable() {
 		
-		//MAKE ANY SCREEN UPDATES THAT NEED TO HAPPEN EACH FRAME WITHIN run()
-		//this means things like redrawing sprites in a different place to make
-		// move
-		@Override
-		public void run() {
-			ghost = (ImageView) findViewById(R.id.ghostID);
-			Ghost ghost1 = new Ghost(ghost);
-			frame.postDelayed(updateScreen, 1000);
-		}
-	};
+		
+		
+	}
+	
+	public void runOverall() {
+		Log.d("thread", "in thread");
+			r = new Runnable() {
+			public void run() {
+				Log.d("thread", "in run");
+				//ghost.setX(ghost1.getX()+1);
+				//ghost.setY(ghost1.getY()+1);
+				//ghost1.getGhostImage().invalidate();
+				frame.postDelayed(r, 1000);
+				
+			}
+		};
+		r.run();
+	}
 	
 	public Point randomPointGenerator() {
 		int x = (int) Math.random() * findViewById(R.id.game_canvas).getWidth();
