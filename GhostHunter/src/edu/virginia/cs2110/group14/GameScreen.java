@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /* this is the view that sits on top of the MainActivity layout. The layout 
@@ -68,11 +69,13 @@ public class GameScreen extends View {
 	
 	public Point randomPointGenerator() {
 		int x = (int) Math.random() * findViewById(R.id.game_canvas).getWidth();
+		Log.d("width", "width: " + findViewById(R.id.game_canvas).getWidth());
 		int y = (int) Math.random() * findViewById(R.id.game_canvas).getHeight();
+		Log.d("height", "Height: " + findViewById(R.id.game_canvas).getHeight());
 		Point p = new Point(x, y);
+		Log.d("Point", "x: "+ p.x + ", y: " + p.y);
 		return p;
 	}
-	
 	
 	
 	
