@@ -2,9 +2,12 @@ package edu.virginia.cs2110.group14;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,7 @@ import edu.virginia.cs2110.group14.*;
 public class MainActivity extends Activity {
 
 	private Handler frame = new Handler();
+	private ImageView ghost;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,7 @@ public class MainActivity extends Activity {
 		                image.getLayoutParams();
 		                mParams.topMargin -= 50;
 		                image.setLayoutParams(mParams);
-		                
-		                // CHANGE TEST
+
 			}
 		});
 		
@@ -92,16 +95,21 @@ public class MainActivity extends Activity {
 		// move
 		@Override
 		public void run() {
-			frame.removeCallbacks(updateScreen);
-			//this resets the canvas, re-calling onDraw
-			((GameScreen)findViewById(R.id.game_canvas)).invalidate();
-			
+			ghost = (ImageView) findViewById(R.id.ghostID);
+			Ghost ghost1 = new Ghost(ghost);
 			frame.postDelayed(updateScreen, 1000);
 		}
 	};
 	
-	
-	
+	public Point randomPointGenerator() {
+		int x = (int) Math.random() * findViewById(R.id.game_canvas).getWidth();
+		Log.d("width", "width: " + findViewById(R.id.game_canvas).getWidth());
+		int y = (int) Math.random() * findViewById(R.id.game_canvas).getHeight();
+		Log.d("height", "Height: " + findViewById(R.id.game_canvas).getHeight());
+		Point p = new Point(x, y);
+		Log.d("Point", "x: "+ p.x + ", y: " + p.y);
+		return p;
+	}
 	
 	
 	

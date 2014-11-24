@@ -1,12 +1,25 @@
 package edu.virginia.cs2110.group14;
 
-import android.graphics.Bitmap;
+
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.view.View;
+import android.util.Log;
+import android.widget.ImageView;
 
 public class Ghost {
-private Point ghostPoint;
-private Rect ghostBounds = new Rect(0,0,0,0);
-//private Bitmap ghostBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ghost);
+
+	private int x;
+	private int y;
+	private ImageView ghost;
+	private MainActivity game;
+
+	public Ghost(ImageView ghostImage) {
+		ghost = ghostImage;
+		Point pt = game.randomPointGenerator();
+		ghost.setX(x);
+		ghost.setY(y);
+		Log.d("point", "x: " + pt.x + ", y: " + pt.y);
+		x++;
+		y++;
+	}
+
 }
