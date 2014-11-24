@@ -30,8 +30,16 @@ public class Ghost {
 	public int getY() {
 		return (int) ghost.getY();
 	}
+	
+	public void setXCoord(int i) {
+		ghost.setX(i);
+	}
+	
+	public void setYCoord(int i) {
+		ghost.setY(i);
+	}
 
 	public ImageView getGhostImage() {
-		return this.ghost;
+		return ghost;
 	}
 }

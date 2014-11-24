@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
 	private ImageView ghost;
 	private ImageView ghostBuster;
 	private Runnable r;
+	private Ghost ghost1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +100,8 @@ public class MainActivity extends Activity {
 			r = new Runnable() {
 			public void run() {
 				Log.d("thread", "in run");
-				//ghost.setX(ghost1.getX()+1);
-				//ghost.setY(ghost1.getY()+1);
-				//ghost1.getGhostImage().invalidate();
+//				ghost1.setTranslationX(1);
+//				ghost1.setTranslationY(1);
 				frame.postDelayed(r, 1000);
 				
 			}
