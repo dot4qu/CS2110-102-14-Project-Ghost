@@ -140,4 +140,22 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+			
+	public  void CollisionResponse(String str) {
+		
+		String action=CollisionHandler.busterGhostCollisions(ghost, ghostBuster);
+		if (action.compareTo("ghost on left")==0 || action.compareTo("ghost on right")==0) {
+			//sound warning that ghost is close
+
+		}
+		
+		if (action.compareTo("ghost on bottom=kill ghost")==0) {
+			//make ghost disappear
+			
+		}
+		
+		if (action.compareTo("ghost on top=kill buster")==0) {
+			//make buster lose a life
+		}
+	}
 }
