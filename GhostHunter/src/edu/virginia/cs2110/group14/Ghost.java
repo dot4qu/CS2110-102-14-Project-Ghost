@@ -12,11 +12,10 @@ public class Ghost {
 	private int y;
 	private ImageView ghost;
 	private Rect ghostBounds;
+	
 
 	public Ghost(ImageView ghostImage, int x, int y) {
 		ghost = ghostImage;
-		ghostBounds = new Rect();
-		
 		ghost.setX(x);
 		ghost.setY(y);
 		//Log.d("point", "x: " + pt.x + ", y: " + pt.y);

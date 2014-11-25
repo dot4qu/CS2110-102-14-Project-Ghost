@@ -9,7 +9,6 @@ public class CollisionHandler {
  private Rect busterBox;
  
  public CollisionHandler(Ghost ghost, ImageView ghostBuster) {
-	 
  ghostBox=new Rect();
  ghost.getGhostImage().getDrawingRect(ghostBox);
  ghostBuster.getDrawingRect(busterBox);
