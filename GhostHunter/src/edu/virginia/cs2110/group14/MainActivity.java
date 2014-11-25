@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -21,7 +22,7 @@ import edu.virginia.cs2110.group14.*;
 public class MainActivity extends Activity {
 
 	private Handler frame = new Handler();
-	private ImageView ghost;
+	private ImageView ghostIMG;
 	private ImageView ghostBuster;
 	private Runnable r;
 	private Ghost ghost1;
@@ -34,8 +35,10 @@ public class MainActivity extends Activity {
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
 		gameMusic.start();
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
-		ghost = (ImageView) findViewById(R.id.ghostID);
-		Ghost ghost1 = new Ghost(ghost);
+		ghostIMG = (ImageView) findViewById(R.id.ghostID);
+		Point pt = this.randomPointGenerator();
+		Log.d("pt", "" + pt.x + " : " + pt.y);
+		ghost1 = new Ghost(ghostIMG, pt.x, pt.y);
 		runOverall();
 		
 		//beginning of UP button implementation
@@ -89,19 +92,13 @@ public class MainActivity extends Activity {
 		                mParams.leftMargin -= 50;
 		                ghostBuster.setLayoutParams(mParams);
 			}
-		});
-		
-		
-		
+		});	
 	}
 	
 	public void runOverall() {
-		Log.d("thread", "in thread");
 			r = new Runnable() {
 			public void run() {
-				Log.d("thread", "in run");
-//				ghost1.setTranslationX(1);
-//				ghost1.setTranslationY(1);
+				ghost1.move();
 				frame.postDelayed(r, 1000);
 				
 			}
@@ -110,12 +107,16 @@ public class MainActivity extends Activity {
 	}
 	
 	public Point randomPointGenerator() {
-		int x = (int) Math.random() * findViewById(R.id.game_canvas).getWidth();
-		Log.d("width", "width: " + findViewById(R.id.game_canvas).getWidth());
-		int y = (int) Math.random() * findViewById(R.id.game_canvas).getHeight();
-		Log.d("height", "Height: " + findViewById(R.id.game_canvas).getHeight());
+		//RelativeLayout screenLayout = (RelativeLayout) this.findViewById(R.id.screen);
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		
+		int x = (int) (Math.random() * width);
+		int y = (int) (Math.random() * height);
 		Point p = new Point(x, y);
-		Log.d("Point", "x: "+ p.x + ", y: " + p.y);
 		return p;
 	}
 	

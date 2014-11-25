@@ -11,13 +11,12 @@ public class Ghost {
 	private int x;
 	private int y;
 	private ImageView ghost;
-	private MainActivity game;
 	private Rect ghostBounds;
 
-	public Ghost(ImageView ghostImage) {
+	public Ghost(ImageView ghostImage, int x, int y) {
 		ghost = ghostImage;
 		ghostBounds = new Rect();
-		//Point pt = game.randomPointGenerator();
+		
 		ghost.setX(x);
 		ghost.setY(y);
 		//Log.d("point", "x: " + pt.x + ", y: " + pt.y);
@@ -41,5 +40,10 @@ public class Ghost {
 
 	public ImageView getGhostImage() {
 		return ghost;
+	}
+	
+	public void move() {
+		//ghost.setY(y+1);
+		//ghost.setX(x-1);
 	}
 }
