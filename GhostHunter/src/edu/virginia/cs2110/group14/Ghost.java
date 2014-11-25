@@ -12,6 +12,8 @@ public class Ghost {
 	private int y;
 	private ImageView ghost;
 	private Rect ghostBounds;
+	private int xVeloc;
+	private int yVeloc;
 	
 
 	public Ghost(ImageView ghostImage, int x, int y) {
@@ -42,7 +44,13 @@ public class Ghost {
 	}
 	
 	public void move() {
-		//ghost.setY(y+1);
-		//ghost.setX(x-1);
+		ghost.setX(ghost.getX() + 1);
+		ghost.setY(ghost.getY() + 1);
+		ghost.invalidate();
+	}
+	
+	public void changeVelocity(int xv, int yv) {
+		ghost.setX(ghost.getX() + xv);
+		ghost.setY(ghost.getY() + yv);
 	}
 }
