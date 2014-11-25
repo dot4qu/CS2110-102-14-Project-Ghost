@@ -7,5 +7,7 @@
     <string name="splash_screen">Splash Screen</string>
     <string name="splash_screen_title">Ghost Hunter</string>
     <string name="splash_screen_info">CS 2110\nBrian Team (dot4qu), Leah Walter (ldw8fb), Byung Eun Shin (bs5sk), Ryan Bannon (rtb7rd)</string>
+    <string name="difficulty_screen_info">Choose your difficulty:</string>
+    <string name="title_activity_difficulty_screen">DifficultyScreen</string>
 
 </resources>
