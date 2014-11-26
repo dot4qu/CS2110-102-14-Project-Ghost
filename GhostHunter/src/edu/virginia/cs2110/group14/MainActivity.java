@@ -2,11 +2,15 @@ package edu.virginia.cs2110.group14;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.media.SoundPool.Builder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -31,16 +35,25 @@ public class MainActivity extends Activity {
 	private ArrayList<Ghost> ghostList;
 	private int initialNumGhosts;
 	
+	//Soundpool for sound effects
+	SoundPool soundpool;
+	int warning = 0;
+	
 	 Rect bottomBound= new Rect();
 	 Rect topBound=new Rect();
 	 Rect leftBound=new Rect();
 	 Rect rightBound=new Rect();
-
-	@Override
+	 
+	
+	 
+	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
+		//Sound effects
+		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		warning = soundpool.load(this, R.raw.warning , 1);
 		// Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this,
 				R.raw.gamesound);
@@ -102,6 +115,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void collisionResponse(Ghost g) {
+		 //MediaPlayer for warning sound
 		Point screenDimensions = getScreenSize();
 		
 		if (g.getX() + g.getGhostImage().getWidth() > screenDimensions.x - 10 || g.getX() < 10)
@@ -115,6 +129,8 @@ public class MainActivity extends Activity {
 		if (action.compareTo("ghost on left") == 0
 				|| action.compareTo("ghost on right") == 0) {
 			// sound warning that ghost is close
+			soundpool.play(warning, 1, 1, 0, 0, 1);
+			soundpool.autoPause();
 			Log.d("ghost", "ghost on left or right");
 		}
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
