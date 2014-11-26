@@ -8,19 +8,21 @@ import android.widget.ImageView;
 
 public class Ghost {
 
-	private int x;
-	private int y;
+	public int x;
+	public int y;
 	private ImageView ghost;
 	private Rect ghostBounds;
-	private int xVeloc;
-	private int yVeloc;
+	private float xVeloc;
+	private float yVeloc;
 	
 
 	public Ghost(ImageView ghostImage, int x, int y) {
 		ghost = ghostImage;
 		ghost.setX(x);
 		ghost.setY(y);
-		//Log.d("point", "x: " + pt.x + ", y: " + pt.y);
+		Log.d("Ghost point", "GHOST  -- X: " + x + ", Y: " + y);
+		xVeloc = randomInitialVelocity();
+		xVeloc = randomInitialVelocity();
 	}
 	
 	public int getX() {
@@ -40,17 +42,30 @@ public class Ghost {
 	}
 
 	public ImageView getGhostImage() {
-		return ghost;
+		return this.ghost;
+	}
+	
+	public float getXVelocity() {
+		return this.xVeloc;
+	}
+	
+	public float getYVelocity() {
+		return this.yVeloc;
 	}
 	
 	public void move() {
-		ghost.setX(ghost.getX() + 1);
-		ghost.setY(ghost.getY() + 1);
+		ghost.setX(ghost.getX() + xVeloc);
+		ghost.setY(ghost.getY() + yVeloc);
 		ghost.invalidate();
 	}
 	
-	public void changeVelocity(int xv, int yv) {
-		ghost.setX(ghost.getX() + xv);
-		ghost.setY(ghost.getY() + yv);
+	public void changeVelocity(float xv, float yv) {
+		xVeloc = xv;
+		yVeloc = yv;
+	}
+	
+	public float randomInitialVelocity() {
+		float pos = (float) Math.random() * 6;
+		return 3 - pos;
 	}
 }

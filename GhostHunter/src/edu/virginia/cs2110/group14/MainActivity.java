@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
 	private Handler frame = new Handler();
 	private ImageView ghostBuster;
 	private Runnable r;
-	private RelativeLayout screenLayout;
 	private ArrayList<Ghost> ghostList;
 	private int initialNumGhosts;
 	
@@ -58,7 +57,7 @@ public class MainActivity extends Activity {
 			initialNumGhosts = NUMGHOSTS_EASY;
 		else if (getDifficultyLevel() == 1)
 			initialNumGhosts = NUMGHOSTS_MEDIUM;
-		else if (getDifficultyLevel() == 3)
+		else if (getDifficultyLevel() == 2)
 			initialNumGhosts = NUMGHOSTS_HARD;
 
 		// creates all of the ghosts
@@ -75,10 +74,10 @@ public class MainActivity extends Activity {
 		r = new Runnable() {
 			public void run() {
 				for (int i = 0; i < ghostList.size(); i++) {
-					//ghostList.get(i).move();
+					ghostList.get(i).move();
 					collisionResponse(ghostList.get(i));
 				}
-				frame.postDelayed(r, 1000);
+				frame.postDelayed(r, 20);
 			}
 		};
 		r.run();
@@ -87,8 +86,8 @@ public class MainActivity extends Activity {
 
 	public Point randomPointGenerator() {
 		Point screen = getScreenSize();
-		int x = (int) (Math.random() * Math.abs(screen.x - 100));
-		int y = (int) (Math.random() * Math.abs(screen.y - 250));
+		int x = (int) Math.abs(Math.random() * (screen.x - 100));
+		int y = (int) Math.abs(Math.random() * (screen.y - 250));
 		Point p = new Point(x, y);
 		return p;
 	}
@@ -103,7 +102,14 @@ public class MainActivity extends Activity {
 	}
 
 	public void collisionResponse(Ghost g) {
+		Point screenDimensions = getScreenSize();
 		
+		if (g.getX() + g.getGhostImage().getWidth() > screenDimensions.x - 10 || g.getX() < 10)
+			g.changeVelocity(-g.getXVelocity(), g.randomInitialVelocity());
+		if (g.getY() > screenDimensions.y - 275 || g.getY() < 10)
+			g.changeVelocity(g.randomInitialVelocity(), -g.getYVelocity());
+		
+		Log.d("collision ghost", "x: " + g.getX() + ", y: " + g.getY());
 		
 		String action = CollisionHandler.busterGhostCollisions(g, ghostBuster);
 		if (action.compareTo("ghost on left") == 0
@@ -129,8 +135,6 @@ public class MainActivity extends Activity {
 		Point pt = this.randomPointGenerator();
 		RelativeLayout screenLayout = (RelativeLayout) findViewById(R.id.screen);
 		screenLayout.addView(ghostIMG);
-		Log.d("Ghost point", "GHOST COORDS -- X: " + pt.x + ", Y: " + pt.y);
-
 		return new Ghost(ghostIMG, pt.x, pt.y);
 	}
 
@@ -209,7 +213,7 @@ public class MainActivity extends Activity {
 		Intent mainIntent = getIntent();
 		return mainIntent.getIntExtra("DIFFICULTY", -1);
 	}
-
+	
 	
 	
 	

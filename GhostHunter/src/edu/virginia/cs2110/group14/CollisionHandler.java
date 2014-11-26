@@ -17,32 +17,18 @@ public class CollisionHandler {
 /*something's weird with the width and height of each image when it's getting it,
  * its remaining constant on the screen for some reason so it changes whenever one of them moves
  * You can check to see by watching the printout in logcat as its running and you move the guy
- * I'll fix it soon. The reason i took away the drawRects is because they were drawing the right 
+ * I'll fix it soon. The reason i took away the drawRects is because they werent drawing the right 
  * sized rectangles for each image, but they were both just sitting in the upper left hand corner and not moving with the image
  */
-		ImageView ghostImage = ghost.getGhostImage();
+ImageView ghostImage = ghost.getGhostImage();
 		
-		Rect ghostBox = new Rect((int) ghostImage.getX(),
-				(int) ghostImage.getY(), ghostImage.getWidth(),
-				ghostImage.getHeight());
+		//makes new rectangle over current position every frame iteration
+		Rect ghostBox = new Rect(ghost.getX(), ghost.getY(), ghost.getX() + ghostImage.getWidth(), ghost.getY() + ghostImage.getHeight());
+		Rect busterBox = new Rect(ghostBuster.getLeft(), ghostBuster.getTop(), ghostBuster.getRight(), ghostBuster.getBottom());
 		
-		Rect busterBox = new Rect((int) ghostBuster.getX(),
-				(int) ghostBuster.getY(), ghostBuster.getWidth(),
-				ghostBuster.getHeight());
-		
-		Rect bottomBound = new Rect();
-		Rect topBound = new Rect();
-		Rect leftBound = new Rect();
-		Rect rightBound = new Rect();
-
 		//debugging
-		Log.d("rects",
-				"ghost -- x: " + ghostBox.left + " y: " + ghostBox.top
-						+ " width: " + ghostBox.width() + " height: "
-						+ ghostBox.height());
-		Log.d("rects", "Buster -- x: " + busterBox.left + " y: "
-				+ busterBox.top + " width: " + busterBox.width() + " height: "
-				+ busterBox.height());
+		Log.d("rects", "ghost -- x: " + ghost.getX() + " y: " + ghost.getY());
+		Log.d("rects", "Buster -- x: " + busterBox.left + " y: " + busterBox.top);
 
 		// handles ghost on buster collision
 		if (ghostBox.intersect(busterBox)) {
@@ -63,12 +49,7 @@ public class CollisionHandler {
 			 }
 
 			// handles ghost on wall collision
-			if (ghostBox.intersect(leftBound) || ghostBox.intersect(rightBound)) {
-				ghost.changeVelocity(-1, 1);
-			}
-			if (ghostBox.intersect(topBound) || ghostBox.intersect(bottomBound)) {
-				ghost.changeVelocity(1, -1);
-			}
+
 
 			// handles buster on wall collision
 
