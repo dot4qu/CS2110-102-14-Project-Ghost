@@ -19,6 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -64,6 +68,11 @@ public class MainActivity extends Activity {
 
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
+		// set up star
+		ImageView star=(ImageView)findViewById(R.id.star);
+		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
+        star.startAnimation(animation);
+
 
 		// checks the difficulty level and sets the number of ghosts accordingly
 		if (getDifficultyLevel() == 0)
