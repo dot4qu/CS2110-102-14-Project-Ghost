@@ -58,21 +58,21 @@ public class MainActivity extends Activity {
 		//Sound effects
 		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		warning = soundpool.load(this, R.raw.warning , 1);
+		
 		// Music
-		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this,
-				R.raw.gamesound);
+		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
 		gameMusic.start();
 
 		// initializes buttons
 		runButtons();
-
+		
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
+		
 		// set up star
 		ImageView star=(ImageView)findViewById(R.id.star);
 		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
         star.startAnimation(animation);
-
 
 		// checks the difficulty level and sets the number of ghosts accordingly
 		if (getDifficultyLevel() == 0)
@@ -96,7 +96,7 @@ public class MainActivity extends Activity {
 		r = new Runnable() {
 			public void run() {
 				for (int i = 0; i < ghostList.size(); i++) {
-					ghostList.get(i).move();
+					//ghostList.get(i).move();
 					collisionResponse(ghostList.get(i));
 				}
 				frame.postDelayed(r, 20);
@@ -127,26 +127,30 @@ public class MainActivity extends Activity {
 		 //MediaPlayer for warning sound
 		Point screenDimensions = getScreenSize();
 		
+		//keeps the ghost within the screen
 		if (g.getX() + g.getGhostImage().getWidth() > screenDimensions.x - 10 || g.getX() < 10)
-			g.changeVelocity(-g.getXVelocity(), g.randomInitialVelocity());
+			g.changeVelocity(-g.getXVelocity(), g.getYVelocity());
 		if (g.getY() > screenDimensions.y - 275 || g.getY() < 10)
-			g.changeVelocity(g.randomInitialVelocity(), -g.getYVelocity());
-		
-		Log.d("collision ghost", "x: " + g.getX() + ", y: " + g.getY());
+			g.changeVelocity(g.getXVelocity(), -g.getYVelocity());
 		
 		String action = CollisionHandler.busterGhostCollisions(g, ghostBuster);
 		if (action.compareTo("ghost on left") == 0
 				|| action.compareTo("ghost on right") == 0) {
+			
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
 			soundpool.autoPause();
-			Log.d("ghost", "ghost on left or right");
+			//Log.d("ghost", "ghost on left or right");
 		}
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
+			ghostList.remove(g);
+			g.removeGhostImage();
+			g = null;
 			// make ghost disappear
 			//Log.d("ghost", "ghost on bottom");
 		}
 		if (action.compareTo("ghost on top=kill buster") == 0) {
+			ghostBuster.invalidate();
 			// make buster lose a life
 			//Log.d("ghost", "ghost on  top");
 		}
@@ -162,6 +166,11 @@ public class MainActivity extends Activity {
 		screenLayout.addView(ghostIMG);
 		return new Ghost(ghostIMG, pt.x, pt.y);
 	}
+	
+	public void killGhost() {
+		ghostList.remove(this);
+		
+	}
 
 	public void runButtons() {
 		// beginning of UP button implementation
@@ -173,8 +182,9 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.topMargin -= 50;
+				mParams.topMargin -= 20;
 				ghostBuster.setLayoutParams(mParams);
+				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
@@ -190,8 +200,9 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.topMargin += 50;
+				mParams.topMargin += 20;
 				ghostBuster.setLayoutParams(mParams);
+				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
@@ -207,8 +218,9 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.leftMargin += 50;
+				mParams.leftMargin += 20;
 				ghostBuster.setLayoutParams(mParams);
+				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
@@ -224,8 +236,9 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.leftMargin -= 50;
+				mParams.leftMargin -= 20;
 				ghostBuster.setLayoutParams(mParams);
+				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;

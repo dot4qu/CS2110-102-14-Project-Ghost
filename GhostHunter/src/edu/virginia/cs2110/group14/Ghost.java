@@ -11,7 +11,6 @@ public class Ghost {
 	public int x;
 	public int y;
 	private ImageView ghost;
-	private Rect ghostBounds;
 	private float xVeloc;
 	private float yVeloc;
 	
@@ -22,7 +21,7 @@ public class Ghost {
 		ghost.setY(y);
 		Log.d("Ghost point", "GHOST  -- X: " + x + ", Y: " + y);
 		xVeloc = randomInitialVelocity();
-		xVeloc = randomInitialVelocity();
+		yVeloc = randomInitialVelocity();
 	}
 	
 	public int getX() {
@@ -43,6 +42,10 @@ public class Ghost {
 
 	public ImageView getGhostImage() {
 		return this.ghost;
+	}
+	
+	public void removeGhostImage() {
+		this.ghost = null;
 	}
 	
 	public float getXVelocity() {
@@ -66,6 +69,10 @@ public class Ghost {
 	
 	public float randomInitialVelocity() {
 		float pos = (float) Math.random() * 6;
+		if (pos > 1 && pos <=3)
+			pos = 1;
+		else if (pos > 3 && pos < 5)
+			pos = 5;
 		return 3 - pos;
 	}
 }
