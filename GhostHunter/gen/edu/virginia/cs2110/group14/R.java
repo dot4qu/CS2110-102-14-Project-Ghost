@@ -33,17 +33,18 @@ public final class R {
         public static final int star=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000b;
-        public static final int difficulty_screen_text=0x7f0a0007;
+        public static final int action_settings=0x7f0a000c;
+        public static final int difficulty_screen_text=0x7f0a0008;
         public static final int down_button=0x7f0a0005;
-        public static final int easy_button=0x7f0a0008;
+        public static final int easy_button=0x7f0a0009;
         public static final int ghostbuster=0x7f0a0001;
-        public static final int hard_button=0x7f0a000a;
+        public static final int hard_button=0x7f0a000b;
         public static final int left_button=0x7f0a0004;
-        public static final int medium_button=0x7f0a0009;
+        public static final int medium_button=0x7f0a000a;
         public static final int right_button=0x7f0a0003;
         public static final int screen=0x7f0a0000;
         public static final int star=0x7f0a0006;
+        public static final int textSwitcher1=0x7f0a0007;
         public static final int up_button=0x7f0a0002;
     }
     public static final class layout {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.AudioManager;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,8 +28,11 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
+import android.widget.ViewSwitcher.ViewFactory;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ViewFactory{
 
 	private final int NUMGHOSTS_EASY = 1;
 	private final int NUMGHOSTS_MEDIUM = 7;
@@ -43,6 +48,12 @@ public class MainActivity extends Activity {
 	SoundPool soundpool;
 	int warning = 0;
 	
+	//Text for textswitcher
+	String textToShow[]={"Lives: 5","Lives: 4","Lives: 3","Lives: 2","Lives: 1","DEAD"};
+    int textCount=textToShow.length;
+    int current = 0;
+    private TextSwitcher lives;
+    
 	 Rect bottomBound= new Rect();
 	 Rect topBound=new Rect();
 	 Rect leftBound=new Rect();
@@ -54,20 +65,33 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+				
 		//Sound effects
-		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		soundpool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 		warning = soundpool.load(this, R.raw.warning , 1);
 		// Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this,
 				R.raw.gamesound);
+		gameMusic.setLooping(true);
 		gameMusic.start();
+		//set up TextSwitcher
+		lives = (TextSwitcher)findViewById(R.id.textSwitcher1);
+		lives.setFactory(this);
+            
+		Animation in = AnimationUtils.loadAnimation(this,android.R.anim.slide_in_left);
+        Animation out = AnimationUtils.loadAnimation(this,android.R.anim.slide_out_right);
 
+        lives.setInAnimation(in);
+        lives.setOutAnimation(out);
+        
+        lives.setText(textToShow[current]);
+       
 		// initializes buttons
 		runButtons();
-
+	
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
+		
 		// set up star
 		ImageView star=(ImageView)findViewById(R.id.star);
 		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
@@ -89,9 +113,20 @@ public class MainActivity extends Activity {
 		}
 
 		runOverall();
-
+		
+		//Textswitcher code: move accordingly
+		// current=current+1;
+		//lives.setText(textToShow[current]);
 	}
 
+	 public View makeView() {
+         // TODO Auto-generated method stub
+         TextView myText = new TextView(MainActivity.this);
+         myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+         myText.setTextSize(24);
+         myText.setTextColor(Color.BLUE);
+         return myText;
+     }
 	public void runOverall() {
 		r = new Runnable() {
 			public void run() {
@@ -124,7 +159,6 @@ public class MainActivity extends Activity {
 	}
 
 	public void collisionResponse(Ghost g) {
-		 //MediaPlayer for warning sound
 		Point screenDimensions = getScreenSize();
 		
 		if (g.getX() + g.getGhostImage().getWidth() > screenDimensions.x - 10 || g.getX() < 10)
@@ -139,8 +173,7 @@ public class MainActivity extends Activity {
 				|| action.compareTo("ghost on right") == 0) {
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
-			soundpool.autoPause();
-			Log.d("ghost", "ghost on left or right");
+			//Log.d("ghost", "ghost on left or right");
 		}
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
 			// make ghost disappear
@@ -274,5 +307,7 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	
 
 }
