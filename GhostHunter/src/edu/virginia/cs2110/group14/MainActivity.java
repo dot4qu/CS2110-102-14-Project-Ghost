@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.media.AudioManager;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -27,8 +29,11 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
+import android.widget.ViewSwitcher.ViewFactory;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ViewFactory {
 
 	private final int NUMGHOSTS_EASY = 4;
 	private final int NUMGHOSTS_MEDIUM = 8;
@@ -51,20 +56,39 @@ public class MainActivity extends Activity {
 	//Soundpool for sound effects
 	private SoundPool soundpool;
 	private int warning = 0;
+
+    //Text for Score textswitcher
+    String textToShow[]={"Score: 0","Score: 1","Score: 2","Score: 3","Score: 4","Score: 5","Score: 6","Score: 7","Score: 8","Score: 9","Score: 10"};
+    int textCount2=textToShow.length;
+    int current2 = 0;
+    private TextSwitcher scoreText;
 	 
 	
-	 
 	@SuppressWarnings("deprecation")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		//set up Score Text
+		scoreText = (TextSwitcher)findViewById(R.id.textSwitcher2);
+		scoreText.setFactory(this);
+		            
+		Animation in = AnimationUtils.loadAnimation(this,android.R.anim.slide_in_left);
+		Animation out = AnimationUtils.loadAnimation(this,android.R.anim.slide_out_right);
+
+		
+		scoreText.setInAnimation(in);
+		scoreText.setOutAnimation(out);
+		        
+		scoreText.setText(textToShow[current2]);
+		      	
 		//Sound effects
 		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		warning = soundpool.load(this, R.raw.warning , 1);
 
 		// Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
+		gameMusic.setLooping(true);
 		gameMusic.start();
 
 		// initializes buttons
@@ -101,6 +125,16 @@ public class MainActivity extends Activity {
 		runOverall();
 
 	}
+	
+
+	 public View makeView() {
+        // TODO Auto-generated method stub
+        TextView myText = new TextView(MainActivity.this);
+        myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+        myText.setTextSize(24);
+        myText.setTextColor(Color.WHITE);
+        return myText;
+    }
 
 	public void runOverall() {
 		r = new Runnable() {
@@ -319,6 +353,5 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
 
 }

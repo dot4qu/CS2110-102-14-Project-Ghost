@@ -42,12 +42,12 @@ public final class R {
         public static final int ghostbuster=0x7f0a0004;
         public static final int hard_button=0x7f0a000e;
         public static final int left_button=0x7f0a0007;
-        public static final int lives=0x7f0a000a;
         public static final int medium_button=0x7f0a000d;
         public static final int play_again_button=0x7f0a0002;
         public static final int right_button=0x7f0a0006;
         public static final int screen=0x7f0a0003;
         public static final int star=0x7f0a0009;
+        public static final int textSwitcher2=0x7f0a000a;
         public static final int up_button=0x7f0a0005;
     }
     public static final class layout {
