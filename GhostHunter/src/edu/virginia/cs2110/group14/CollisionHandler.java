@@ -22,10 +22,6 @@ public class CollisionHandler {
 		//makes new rectangle over current position every frame iteration
 		Rect ghostBox = new Rect(ghost.getX(), ghost.getY(), ghost.getX() + ghostImage.getWidth(), ghost.getY() + ghostImage.getHeight());
 		Rect busterBox = new Rect(ghostBuster.getLeft(), ghostBuster.getTop(), ghostBuster.getRight(), ghostBuster.getBottom());
-		
-		//debugging
-//		Log.d("rects", "ghost -- getx: " + ghost.getX() + " x+width: " + ghost.getX() + ghostImage.getWidth());
-//		Log.d("rects", "Buster -- centery: " + busterBox.centerY() + " top: " + busterBox.top + " bottom: " + busterBox.bottom);
 
 		//if they intersect, makes a rectangle with the dimensions of how they intersected
 		if (ghostBox.intersect(busterBox)) {
@@ -79,27 +75,6 @@ public class CollisionHandler {
 				}
 				return "ghost on side";
 			}
-			
-			
-			
-			
-			/**
-			 *  if (ghostBox.centerX() < busterBox.centerX() && ghostBox.bottom >=
-			 busterBox.top && busterBox.bottom >= ghostBox.top) {
-			 return "ghost on left";
-			 }
-			 if (ghostBox.centerX()>busterBox.centerX() && ghostBox.bottom >=
-			 busterBox.top && busterBox.bottom >= ghostBox.top) {
-			 return "ghost on right";
-			 }
-			 if (ghostBox.centerY() > busterBox.centerY() && busterBox.left < ghostBox.right && busterBox.right > ghostBox.left) {
-			 return "ghost on bottom=kill ghost";
-			 }
-			 if (ghostBox.centerY() < busterBox.centerY()) {
-			 return "ghost on top=kill buster";
-			 } 
-			 **/
-
 		
 		return "no collision";
 	}
