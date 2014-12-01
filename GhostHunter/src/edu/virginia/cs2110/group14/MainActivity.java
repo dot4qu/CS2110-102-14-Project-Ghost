@@ -70,10 +70,11 @@ public class MainActivity extends Activity {
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
 		
 		// set up star
+		
 		Star star1=new Star((ImageView)findViewById(R.id.star), 50, 50);
 		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
         star1.getStarImage().startAnimation(animation);
-
+        
 		// checks the difficulty level and sets the number of ghosts accordingly
 		if (getDifficultyLevel() == 0)
 			initialNumGhosts = NUMGHOSTS_EASY;
