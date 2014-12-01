@@ -33,23 +33,28 @@ public final class R {
         public static final int star=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000b;
-        public static final int difficulty_screen_text=0x7f0a0007;
-        public static final int down_button=0x7f0a0005;
-        public static final int easy_button=0x7f0a0008;
-        public static final int ghostbuster=0x7f0a0001;
-        public static final int hard_button=0x7f0a000a;
-        public static final int left_button=0x7f0a0004;
-        public static final int medium_button=0x7f0a0009;
-        public static final int right_button=0x7f0a0003;
-        public static final int screen=0x7f0a0000;
-        public static final int star=0x7f0a0006;
-        public static final int up_button=0x7f0a0002;
+        public static final int action_settings=0x7f0a000f;
+        public static final int difficulty_screen_text=0x7f0a000b;
+        public static final int down_button=0x7f0a0008;
+        public static final int easy_button=0x7f0a000c;
+        public static final int game_over_text=0x7f0a0001;
+        public static final int game_over_title=0x7f0a0000;
+        public static final int ghostbuster=0x7f0a0004;
+        public static final int hard_button=0x7f0a000e;
+        public static final int left_button=0x7f0a0007;
+        public static final int lives=0x7f0a000a;
+        public static final int medium_button=0x7f0a000d;
+        public static final int play_again_button=0x7f0a0002;
+        public static final int right_button=0x7f0a0006;
+        public static final int screen=0x7f0a0003;
+        public static final int star=0x7f0a0009;
+        public static final int up_button=0x7f0a0005;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int difficulty_screen=0x7f030001;
-        public static final int splashscreen=0x7f030002;
+        public static final int activity_game_over=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int difficulty_screen=0x7f030002;
+        public static final int splashscreen=0x7f030003;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -62,11 +67,15 @@ public final class R {
         public static final int action_settings=0x7f070002;
         public static final int app_name=0x7f070000;
         public static final int difficulty_screen_info=0x7f070006;
+        public static final int game_over_text=0x7f07000b;
+        public static final int game_over_title=0x7f07000a;
         public static final int hello_world=0x7f070001;
         public static final int splash_screen=0x7f070003;
         public static final int splash_screen_info=0x7f070005;
         public static final int splash_screen_title=0x7f070004;
         public static final int title_activity_difficulty_screen=0x7f070007;
+        public static final int title_activity_draw_test=0x7f070008;
+        public static final int title_activity_game_over=0x7f070009;
     }
     public static final class style {
         /** 

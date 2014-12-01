@@ -30,7 +30,13 @@
         </activity>
         <activity
             android:name=".DifficultyScreen"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_difficulty_screen" >
+        </activity>
+        <activity
+            android:name=".GameOver"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_game_over" >
         </activity>
     </application>
 

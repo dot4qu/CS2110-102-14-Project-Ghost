@@ -24,57 +24,67 @@ public class CollisionHandler {
 		Rect busterBox = new Rect(ghostBuster.getLeft(), ghostBuster.getTop(), ghostBuster.getRight(), ghostBuster.getBottom());
 		
 		//debugging
-//		Log.d("rects", "ghost -- x: " + ghost.getX() + " y: " + ghost.getY());
-//		Log.d("rects", "Buster -- x: " + busterBox.left + " y: " + busterBox.top);
+//		Log.d("rects", "ghost -- getx: " + ghost.getX() + " x+width: " + ghost.getX() + ghostImage.getWidth());
+//		Log.d("rects", "Buster -- centery: " + busterBox.centerY() + " top: " + busterBox.top + " bottom: " + busterBox.bottom);
 
 		//if they intersect, makes a rectangle with the dimensions of how they intersected
 		if (ghostBox.intersect(busterBox)) {
 			//ghost is to the left
 			if (ghostBox.centerX() < busterBox.centerX()) {
 				//ghost is higher
-				if (ghostBox.top < busterBox.top) {
+				if (ghostBox.centerY() < busterBox.centerY()) {
 					intersection = new Rect(busterBox.left, busterBox.top, ghostBox.right, ghostBox.bottom);
 				}
 					//buster is higher
-				else if (ghostBox.top > busterBox.top) {
+				else if (ghostBox.centerY() > busterBox.centerY()) {
 					intersection = new Rect(busterBox.left, ghostBox.top, ghostBox.right, busterBox.bottom); 
 				}	
 			}
 			//ghost is on right
 			else if (ghostBox.centerX() > busterBox.centerX()) {
 				//ghost is higher
-				if (ghostBox.top < busterBox.top) {
+				if (ghostBox.centerY() < busterBox.centerY()) {
 					intersection = new Rect(ghostBox.left, busterBox.top, busterBox.right, ghostBox.bottom);
+					//Log.d("collision", "missing");
 				}
 				//buster is higher
-				else if (ghostBox.top > busterBox.top) {
+				else if (ghostBox.centerY() > busterBox.centerY()) {
 					intersection = new Rect(ghostBox.left, ghostBox.top, busterBox.right, busterBox.bottom);
+					//Log.d("collision", "expected");
 				}
 			}
 		}
+		
 			//then uses the 'intersection' rectangle's dimensions to determine who is above whom
 			//if the width of the intersection rectangle is bigger than the height, then it's a top bottom collision
 			//if the height is bigger than the width, its a sideways collision
 			
 			//vertical collision
-			if (intersection.width() > (intersection.height() + intersection.height()/3)) {
-				Log.d("collision", "vertical");
+			if (intersection.width() > intersection.height()) {
+				//Log.d("collision", "vertical");
 				if (busterBox.centerY() < ghostBox.centerY()) {
-					Log.d("collision", "buster above, ghost dead");
+					return "ghost on bottom=kill ghost";
 				}
 				else if (busterBox.centerY() > ghostBox.centerY()) {
-					Log.d("collision", "buster below, buster dead");
+					return "ghost on top=kill buster";
 				}
 			}
 			//sideways collision
-			else if (intersection.height() > (intersection.width() + intersection.width()/3)) {
-				Log.d("collision", "sideways");
+			else if (intersection.height() >intersection.width()) {
+				if (ghostBox.centerX() < busterBox.centerX()) {  	//ghost is on left
+				ghost.setXCoord(ghost.getX() - intersection.width());
+				}
+				else if (ghostBox.centerX() > busterBox.centerX()) {	//ghost is on the right
+					ghost.setXCoord(ghost.getX() + intersection.width());
+				}
+				return "ghost on side";
 			}
 			
 			
 			
 			
-			/** if (ghostBox.centerX() < busterBox.centerX() && ghostBox.bottom >=
+			/**
+			 *  if (ghostBox.centerX() < busterBox.centerX() && ghostBox.bottom >=
 			 busterBox.top && busterBox.bottom >= ghostBox.top) {
 			 return "ghost on left";
 			 }
@@ -90,10 +100,6 @@ public class CollisionHandler {
 			 } 
 			 **/
 
-			// handles ghost on wall collision
-
-
-			// handles buster on wall collision
 		
 		return "no collision";
 	}

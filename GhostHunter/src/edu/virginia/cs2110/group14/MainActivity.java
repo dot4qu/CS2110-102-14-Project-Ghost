@@ -11,6 +11,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.media.SoundPool.Builder;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -38,15 +39,18 @@ public class MainActivity extends Activity {
 	private Runnable r;
 	private ArrayList<Ghost> ghostList;
 	private int initialNumGhosts;
+	private boolean gameOn;
+	private int lives;
+	private RelativeLayout screenLayout;
+	private Point screenDimensions;
+	
+	private ImageView star1;
+	private ImageView star2;
+	private ImageView star3;
 	
 	//Soundpool for sound effects
-	SoundPool soundpool;
-	int warning = 0;
-	
-	 Rect bottomBound= new Rect();
-	 Rect topBound=new Rect();
-	 Rect leftBound=new Rect();
-	 Rect rightBound=new Rect();
+	private SoundPool soundpool;
+	private int warning = 0;
 	 
 	
 	 
@@ -58,7 +62,7 @@ public class MainActivity extends Activity {
 		//Sound effects
 		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		warning = soundpool.load(this, R.raw.warning , 1);
-		
+
 		// Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
 		gameMusic.start();
@@ -68,11 +72,12 @@ public class MainActivity extends Activity {
 		
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
+		Log.d("buster", "width: " + ghostBuster.getWidth() + " height: " + ghostBuster.getHeight());
+		Log.d("buster", "top: " + ghostBuster.getX() + " bottom: " + ghostBuster.getY());
 		
-		// set up star
-		ImageView star=(ImageView)findViewById(R.id.star);
-		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
-        star.startAnimation(animation);
+		
+		//set up stars
+		setUpStars();
 
 		// checks the difficulty level and sets the number of ghosts accordingly
 		if (getDifficultyLevel() == 0)
@@ -87,7 +92,9 @@ public class MainActivity extends Activity {
 		for (int i = 0; i < initialNumGhosts; i++) {
 			ghostList.add(makeGhost());
 		}
-
+		
+		gameOn = true;
+		lives = 3;
 		runOverall();
 
 	}
@@ -96,14 +103,19 @@ public class MainActivity extends Activity {
 		r = new Runnable() {
 			public void run() {
 				for (int i = 0; i < ghostList.size(); i++) {
-					//ghostList.get(i).move();
+					ghostList.get(i).move();
 					collisionResponse(ghostList.get(i));
+			        
+					if (!gameOn) {
+						//end activity and stop thread
+						Intent intent = new Intent(MainActivity.this, GameOver.class);
+						startActivity(intent);
+					}
 				}
 				frame.postDelayed(r, 20);
 			}
 		};
-		r.run();
-		
+			r.run();
 	}
 
 	public Point randomPointGenerator() {
@@ -124,9 +136,7 @@ public class MainActivity extends Activity {
 	}
 
 	public void collisionResponse(Ghost g) {
-		 //MediaPlayer for warning sound
-		Point screenDimensions = getScreenSize();
-		
+		screenDimensions = getScreenSize();
 		//keeps the ghost within the screen
 		if (g.getX() + g.getGhostImage().getWidth() > screenDimensions.x - 10 || g.getX() < 10)
 			g.changeVelocity(-g.getXVelocity(), g.getYVelocity());
@@ -134,25 +144,28 @@ public class MainActivity extends Activity {
 			g.changeVelocity(g.getXVelocity(), -g.getYVelocity());
 		
 		String action = CollisionHandler.busterGhostCollisions(g, ghostBuster);
-		if (action.compareTo("ghost on left") == 0
-				|| action.compareTo("ghost on right") == 0) {
-			
+		if (action.compareTo("ghost on side") == 0) {
+			g.changeVelocity(-g.getXVelocity(), g.getYVelocity()); //bounces ghost off
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
 			soundpool.autoPause();
-			//Log.d("ghost", "ghost on left or right");
 		}
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
-			ghostList.remove(g);
+			screenLayout.removeView(g.getGhostImage());
+			ghostList.remove(g);	//deletes the ghost
 			g.removeGhostImage();
 			g = null;
-			// make ghost disappear
-			//Log.d("ghost", "ghost on bottom");
 		}
-		if (action.compareTo("ghost on top=kill buster") == 0) {
-			ghostBuster.invalidate();
-			// make buster lose a life
-			//Log.d("ghost", "ghost on  top");
+		if (action.compareTo("ghost on top=kill buster") == 0) {	//make buster lose a life or game over
+			if (lives == 1)
+				gameOn = false;
+			else {
+				Log.d("death", "dead");
+				ghostBuster.setX(screenDimensions.x / 2);
+				ghostBuster.setY(screenDimensions.y / 2);
+				lives--;
+			}
+			
 		}
 	}
 
@@ -162,14 +175,35 @@ public class MainActivity extends Activity {
 		ImageView ghostIMG = new ImageView(this);
 		ghostIMG.setImageResource(R.drawable.ghost);
 		Point pt = this.randomPointGenerator();
-		RelativeLayout screenLayout = (RelativeLayout) findViewById(R.id.screen);
 		screenLayout.addView(ghostIMG);
 		return new Ghost(ghostIMG, pt.x, pt.y);
 	}
 	
-	public void killGhost() {
-		ghostList.remove(this);
-		
+	public void setUpStars() {
+		// set up star
+				ImageView star1 = new ImageView(this);
+				star1.setImageResource(R.drawable.star);
+		        ImageView star2 = new ImageView(this);
+				star2.setImageResource(R.drawable.star);
+		        ImageView star3 = new ImageView(this);
+				star3.setImageResource(R.drawable.star);
+				
+				Animation spin = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
+				//star1.startAnimation(spin);
+				//star2.startAnimation(spin);
+				//star3.startAnimation(spin);
+		        
+		        screenLayout = (RelativeLayout) findViewById(R.id.screen);
+		        
+		        screenLayout.addView(star1);
+		        screenLayout.addView(star2);
+		        screenLayout.addView(star3);
+		        star1.setY(1115);
+		        star1.setX(10);
+		        star2.setY(1115);
+		        star2.setX(65);
+		        star3.setY(1115);
+		        star3.setX(120);
 	}
 
 	public void runButtons() {
@@ -182,7 +216,7 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.topMargin -= 20;
+				mParams.topMargin -= 10;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -200,7 +234,7 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.topMargin += 20;
+				mParams.topMargin += 10;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -218,7 +252,7 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.leftMargin += 20;
+				mParams.leftMargin += 10;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -236,7 +270,7 @@ public class MainActivity extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.leftMargin -= 20;
+				mParams.leftMargin -= 10;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -287,5 +321,6 @@ public class MainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 
 }

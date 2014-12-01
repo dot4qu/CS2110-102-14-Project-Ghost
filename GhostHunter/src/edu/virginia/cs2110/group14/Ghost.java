@@ -1,8 +1,6 @@
 package edu.virginia.cs2110.group14;
 
 
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.Log;
 import android.widget.ImageView;
 

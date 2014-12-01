@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="50sp"
+        android:textSize="70sp"
         android:layout_marginTop="30dp"
         android:text="@string/splash_screen_title"
         android:textColor="#ff0000"
@@ -20,10 +20,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:paddingBottom="10dp"
+        android:paddingBottom="30dp"
         android:paddingTop="280dp"
         android:text="@string/splash_screen_info"
         android:textColor="#ff0000"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
 </RelativeLayout>

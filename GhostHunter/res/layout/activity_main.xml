@@ -63,5 +63,12 @@
         android:layout_marginTop="114dp"
         android:layout_toLeftOf="@+id/right_button"
         android:src="@drawable/star" />
+    
+    <TextView
+        android:id="@+id/lives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lives:"
+        />
 
 </RelativeLayout>
