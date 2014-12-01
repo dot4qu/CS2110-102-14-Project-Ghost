@@ -58,11 +58,9 @@ public class CollisionHandler {
 			//vertical collision
 			if (intersection.width() > intersection.height()) {
 				if (busterBox.centerY() < ghostBox.centerY()) {
-					Log.d("dd", "kill");
 					return "ghost on bottom=kill ghost";
 				}
 				else if (busterBox.centerY() > ghostBox.centerY()) {
-					Log.d("dd", "dead");
 					return "ghost on top=kill buster";	
 				}
 			}

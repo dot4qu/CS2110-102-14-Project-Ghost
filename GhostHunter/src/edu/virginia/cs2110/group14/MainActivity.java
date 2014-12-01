@@ -48,6 +48,7 @@ public class MainActivity extends Activity implements ViewFactory {
 	private int lives;
 	private RelativeLayout screenLayout;
 	private Point screenDimensions;
+	private MediaPlayer gameMusic;
 	
 	private ImageView star1;
 	private ImageView star2;
@@ -90,6 +91,7 @@ public class MainActivity extends Activity implements ViewFactory {
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
 		gameMusic.setLooping(true);
 		gameMusic.start();
+		gameMusic.setLooping(true);
 
 		// initializes buttons
 		runButtons();
@@ -177,26 +179,29 @@ public class MainActivity extends Activity implements ViewFactory {
 		String action = CollisionHandler.busterGhostCollisions(g, ghostBuster);
 		if (action.compareTo("ghost on side") == 0) {
 			g.changeVelocity(-g.getXVelocity(), g.getYVelocity()); //bounces ghost off
+			Log.d("dd", "side");
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
 			soundpool.autoPause();
 		}
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
 			screenLayout.removeView(g.getGhostImage());
+			Log.d("dd", "kill");
 			ghostList.remove(g);	//deletes the ghost
 			g.removeGhostImage();
 			g = null;
 		}
-		if (action.compareTo("ghost on top=kill buster") == 0) {	//make buster lose a life or game over
-			if (lives == 1)
+		if (action.compareTo("ghost on top=kill buster") == 0) { 	//make buster lose a life or game over
+			Log.d("dd", "dead");
+			/*if (lives == 1)
 				gameOn = false;
 			else {
-				Log.d("death", "dead");
 				ghostBuster.setX(screenDimensions.x / 2);
 				ghostBuster.setY(screenDimensions.y / 2);
 				ghostBuster.postInvalidate();
 				lives--;
-			}
+			}*/
+			finish();
 			
 		}
 	}
@@ -329,11 +334,31 @@ public class MainActivity extends Activity implements ViewFactory {
 	
 	
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		gameMusic.release();
+		Intent intent = new Intent(MainActivity.this, GameOver.class);
+		startActivity(intent);
+	}
 	
+	@Override
+	public void onStart() {
+		super.onStart();
+		gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
+		gameMusic.start();
+	}
 	
+	@Override
+	public void onStop() {
+		super.onStop();
+		gameMusic.stop();
+	}
 	
-	
-	
+	@Override
+	public void onRestart() {
+		super.onRestart();
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
