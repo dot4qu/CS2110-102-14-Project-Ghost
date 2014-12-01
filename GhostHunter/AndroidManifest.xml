@@ -25,23 +25,18 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".DifficultyScreen"
-            android:label="@string/title_activity_difficulty_screen"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_difficulty_screen" >
         </activity>
         <activity
             android:name=".GameOver"
-            android:label="@string/title_activity_game_over"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name=".Instructions"
-            android:label="@string/title_activity_instructions" >
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_game_over" >
         </activity>
     </application>
 
