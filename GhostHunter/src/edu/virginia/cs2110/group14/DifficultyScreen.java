@@ -34,6 +34,7 @@ public class DifficultyScreen extends Activity {
 			if (e.getAction() == MotionEvent.ACTION_UP) {
 				difficultyLevel = 0;
 				mainIntent.putExtra("DIFFICULTY", difficultyLevel);
+				finish();
 				startActivity(mainIntent);
 				return true;
 			}
@@ -47,6 +48,7 @@ public class DifficultyScreen extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_UP) {
 					difficultyLevel = 1;
 					mainIntent.putExtra("DIFFICULTY", difficultyLevel);
+					finish();
 					startActivity(mainIntent);
 					return true;
 				}
@@ -60,6 +62,7 @@ public class DifficultyScreen extends Activity {
 				if (e.getAction() == MotionEvent.ACTION_UP) {
 					difficultyLevel = 2;
 					mainIntent.putExtra("DIFFICULTY", difficultyLevel);
+					finish();
 					startActivity(mainIntent);
 					return true;
 				}

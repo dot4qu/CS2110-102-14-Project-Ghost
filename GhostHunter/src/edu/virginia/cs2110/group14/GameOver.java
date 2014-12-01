@@ -24,6 +24,7 @@ public class GameOver extends Activity {
 				if (event.getAction() == MotionEvent.ACTION_UP) {
 					Intent intent = new Intent(GameOver.this, DifficultyScreen.class);
 					startActivity(intent);
+					finish();
 					return true;
 				}
 				else

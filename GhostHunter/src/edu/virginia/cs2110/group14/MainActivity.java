@@ -30,9 +30,9 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends Activity {
 
-	private final int NUMGHOSTS_EASY = 1;
-	private final int NUMGHOSTS_MEDIUM = 7;
-	private final int NUMGHOSTS_HARD = 10;
+	private final int NUMGHOSTS_EASY = 4;
+	private final int NUMGHOSTS_MEDIUM = 8;
+	private final int NUMGHOSTS_HARD = 11;
 
 	private Handler frame = new Handler();
 	private ImageView ghostBuster;
@@ -72,9 +72,6 @@ public class MainActivity extends Activity {
 		
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
-		Log.d("buster", "width: " + ghostBuster.getWidth() + " height: " + ghostBuster.getHeight());
-		Log.d("buster", "top: " + ghostBuster.getX() + " bottom: " + ghostBuster.getY());
-
 		
 		//set up stars
 		setUpStars();
@@ -111,12 +108,6 @@ public class MainActivity extends Activity {
 				for (int i = 0; i < ghostList.size(); i++) {
 					ghostList.get(i).move();
 					collisionResponse(ghostList.get(i));
-			        
-					if (!gameOn) {
-						//end activity and stop thread
-						Intent intent = new Intent(MainActivity.this, GameOver.class);
-						startActivity(intent);
-					}
 				}
 				frame.postDelayed(r, 20);
 			}
@@ -127,7 +118,7 @@ public class MainActivity extends Activity {
 	public Point randomPointGenerator() {
 		Point screen = getScreenSize();
 		int x = (int) Math.abs(Math.random() * (screen.x - 100));
-		int y = (int) Math.abs(Math.random() * (screen.y - 250));
+		int y = (int) Math.abs(Math.random() * (screen.y - 290));
 		Point p = new Point(x, y);
 		return p;
 	}
@@ -169,6 +160,7 @@ public class MainActivity extends Activity {
 				Log.d("death", "dead");
 				ghostBuster.setX(screenDimensions.x / 2);
 				ghostBuster.setY(screenDimensions.y / 2);
+				ghostBuster.postInvalidate();
 				lives--;
 			}
 			

@@ -57,12 +57,13 @@ public class CollisionHandler {
 			
 			//vertical collision
 			if (intersection.width() > intersection.height()) {
-				//Log.d("collision", "vertical");
 				if (busterBox.centerY() < ghostBox.centerY()) {
+					Log.d("dd", "kill");
 					return "ghost on bottom=kill ghost";
 				}
 				else if (busterBox.centerY() > ghostBox.centerY()) {
-					return "ghost on top=kill buster";
+					Log.d("dd", "dead");
+					return "ghost on top=kill buster";	
 				}
 			}
 			//sideways collision
@@ -73,6 +74,7 @@ public class CollisionHandler {
 				else if (ghostBox.centerX() > busterBox.centerX()) {	//ghost is on the right
 					ghost.setXCoord(ghost.getX() + intersection.width());
 				}
+				Log.d("dd", "side");
 				return "ghost on side";
 			}
 		
