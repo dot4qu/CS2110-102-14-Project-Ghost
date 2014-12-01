@@ -11,7 +11,9 @@
     <string name="title_activity_difficulty_screen">DifficultyScreen</string>
     <string name="title_activity_draw_test">DrawTest</string>
     <string name="title_activity_game_over">GameOver</string>
-	<string name="game_over_title">Game Over!</string>
-	<string name="game_over_text">Would you like to play again?</string>
-</resources>
+    <string name="game_over_title">Game Over!</string>
+    <string name="game_over_text">Would you like to play again?</string>
+    <string name="instructions">To move your character...</string>
+    <string name="how_to_play">how_to_play</string>
 
+</resources>
