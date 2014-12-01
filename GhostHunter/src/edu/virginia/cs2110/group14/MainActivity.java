@@ -75,10 +75,19 @@ public class MainActivity extends Activity {
 		Log.d("buster", "width: " + ghostBuster.getWidth() + " height: " + ghostBuster.getHeight());
 		Log.d("buster", "top: " + ghostBuster.getX() + " bottom: " + ghostBuster.getY());
 		
+<<<<<<< HEAD
 		
 		//set up stars
 		setUpStars();
 
+=======
+		// set up star
+		
+		Star star1=new Star((ImageView)findViewById(R.id.star), 50, 50);
+		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
+        star1.getStarImage().startAnimation(animation);
+        
+>>>>>>> FETCH_HEAD
 		// checks the difficulty level and sets the number of ghosts accordingly
 		if (getDifficultyLevel() == 0)
 			initialNumGhosts = NUMGHOSTS_EASY;
