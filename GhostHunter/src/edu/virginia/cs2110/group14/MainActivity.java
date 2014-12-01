@@ -190,15 +190,11 @@ public class MainActivity extends Activity implements ViewFactory {
 			ghostList.remove(g);	//deletes the ghost
 			g.removeGhostImage();
 			g = null;
-<<<<<<< Updated upstream
 			soundpool.play(kill, 1, 1, 0, 0, 1);
-=======
 			makeStar();
->>>>>>> Stashed changes
 		}
 		if (action.compareTo("ghost on top=kill buster") == 0) { 	//make buster lose a life or game over
 			soundpool.play(death, 1, 1, 0, 0, 1);
-			Log.d("dd", "dead");
 			/*if (lives == 1)
 				gameOn = false;
 			else {
@@ -208,23 +204,17 @@ public class MainActivity extends Activity implements ViewFactory {
 				lives--;
 			}*/
 			finish();
-<<<<<<< Updated upstream
-=======
 		}
 	}
 	
 	public void starCollisionCheck(ImageView star) {
 		Rect busterBox = new Rect(ghostBuster.getLeft(), ghostBuster.getTop(), ghostBuster.getRight(), ghostBuster.getBottom());
 		Rect starBox = new Rect((int) star.getX(),(int) star.getY(),(int) star.getX() + star.getWidth(),(int) star.getY() + star.getHeight());
-		Log.d("star", "starCoords: x: " + star.getX() + " y: " + star.getY());
 		if (Rect.intersects(busterBox, starBox)) {
-			Log.d("star", "intersecting");
 			screenLayout.removeView(star);
 			starList.remove(star);
-			
 			current++;
 			scoreText.setText(textToShow[current]);
->>>>>>> Stashed changes
 		}
 	}
 
@@ -244,13 +234,11 @@ public class MainActivity extends Activity implements ViewFactory {
 	Point pt = randomPointGenerator();
 	star.setX(pt.x);
 	star.setY(pt.y);
-	screenLayout.addView(star);
-	starList.add(star);
 	//Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
     //star.startAnimation(animation);
-	RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
-	rotate.setDuration(Math.abs(Animation.INFINITE));
-	star.startAnimation(rotate);
+	screenLayout.addView(star);
+	starList.add(star);
+	
 	}
 
 	public void runButtons() {
