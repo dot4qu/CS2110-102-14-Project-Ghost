@@ -49,10 +49,8 @@ public class MainActivity extends Activity implements ViewFactory {
 	private RelativeLayout screenLayout;
 	private Point screenDimensions;
 	private MediaPlayer gameMusic;
-	
-	private ImageView star1;
-	private ImageView star2;
-	private ImageView star3;
+	private ArrayList<ImageView> starList = new ArrayList<ImageView>();
+	private int difficultyLevel;
 	
 	//Soundpool for sound effects
 	private SoundPool soundpool;
@@ -61,7 +59,7 @@ public class MainActivity extends Activity implements ViewFactory {
 	private int death = 0;
 
     //Text for Score textswitcher
-    String textToShow[]={"Score: 0","Score: 1","Score: 2","Score: 3","Score: 4","Score: 5","Score: 6","Score: 7","Score: 8","Score: 9","Score: 10","Score: 11","Score: 12","Score: 13","Score: 14","Score: 15","Score: 16","Score: 17","Score: 18","Score: 19","Score: 20","Score: 21","Score: 22","Score: 23","Score: 24","Score: 25","Score: 26","Score: 27","Score: 28","Score: 29","Score: 30"};
+    String[] textToShow={"Score: 0","Score: 1","Score: 2","Score: 3","Score: 4","Score: 5","Score: 6","Score: 7","Score: 8","Score: 9","Score: 10","Score: 11","Score: 12","Score: 13","Score: 14","Score: 15","Score: 16","Score: 17","Score: 18","Score: 19","Score: 20","Score: 21","Score: 22","Score: 23","Score: 24","Score: 25","Score: 26","Score: 27","Score: 28","Score: 29","Score: 30"};
     int textCount=textToShow.length;
     int current = 0;
     private TextSwitcher scoreText;
@@ -71,6 +69,7 @@ public class MainActivity extends Activity implements ViewFactory {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		screenLayout = (RelativeLayout) findViewById(R.id.screen);
 		
 		//set up Score Text
 		scoreText = (TextSwitcher)findViewById(R.id.textSwitcher2);
@@ -101,22 +100,14 @@ public class MainActivity extends Activity implements ViewFactory {
 		
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
-		
-		//set up stars
-		setUpStars();
-
-		// set up star
-		
-		Star star1=new Star((ImageView)findViewById(R.id.star), 50, 50);
-		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
-        star1.getStarImage().startAnimation(animation);
 
 		// checks the difficulty level and sets the number of ghosts accordingly
-		if (getDifficultyLevel() == 0)
+		difficultyLevel = getDifficultyLevel();
+		if (difficultyLevel == 0)
 			initialNumGhosts = NUMGHOSTS_EASY;
-		else if (getDifficultyLevel() == 1)
+		else if (difficultyLevel == 1)
 			initialNumGhosts = NUMGHOSTS_MEDIUM;
-		else if (getDifficultyLevel() == 2)
+		else if (difficultyLevel == 2)
 			initialNumGhosts = NUMGHOSTS_HARD;
 
 		// creates all of the ghosts
@@ -145,8 +136,14 @@ public class MainActivity extends Activity implements ViewFactory {
 		r = new Runnable() {
 			public void run() {
 				for (int i = 0; i < ghostList.size(); i++) {
+					if (ghostList.size() < initialNumGhosts) {
+						ghostList.add(makeGhost());
+					}
 					ghostList.get(i).move();
 					collisionResponse(ghostList.get(i));
+				}
+				for (int j = 0; j < starList.size(); j++) {
+					starCollisionCheck(starList.get(j));
 				}
 				frame.postDelayed(r, 20);
 			}
@@ -186,15 +183,18 @@ public class MainActivity extends Activity implements ViewFactory {
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
 		}
+		
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
-			current = current+1;
-			scoreText.setText(textToShow[current]);
 			screenLayout.removeView(g.getGhostImage());
 			Log.d("dd", "kill");
 			ghostList.remove(g);	//deletes the ghost
 			g.removeGhostImage();
 			g = null;
+<<<<<<< Updated upstream
 			soundpool.play(kill, 1, 1, 0, 0, 1);
+=======
+			makeStar();
+>>>>>>> Stashed changes
 		}
 		if (action.compareTo("ghost on top=kill buster") == 0) { 	//make buster lose a life or game over
 			soundpool.play(death, 1, 1, 0, 0, 1);
@@ -208,6 +208,23 @@ public class MainActivity extends Activity implements ViewFactory {
 				lives--;
 			}*/
 			finish();
+<<<<<<< Updated upstream
+=======
+		}
+	}
+	
+	public void starCollisionCheck(ImageView star) {
+		Rect busterBox = new Rect(ghostBuster.getLeft(), ghostBuster.getTop(), ghostBuster.getRight(), ghostBuster.getBottom());
+		Rect starBox = new Rect((int) star.getX(),(int) star.getY(),(int) star.getX() + star.getWidth(),(int) star.getY() + star.getHeight());
+		Log.d("star", "starCoords: x: " + star.getX() + " y: " + star.getY());
+		if (Rect.intersects(busterBox, starBox)) {
+			Log.d("star", "intersecting");
+			screenLayout.removeView(star);
+			starList.remove(star);
+			
+			current++;
+			scoreText.setText(textToShow[current]);
+>>>>>>> Stashed changes
 		}
 	}
 
@@ -221,31 +238,19 @@ public class MainActivity extends Activity implements ViewFactory {
 		return new Ghost(ghostIMG, pt.x, pt.y);
 	}
 	
-	public void setUpStars() {
-		// set up star
-				ImageView star1 = new ImageView(this);
-				star1.setImageResource(R.drawable.star);
-		        ImageView star2 = new ImageView(this);
-				star2.setImageResource(R.drawable.star);
-		        ImageView star3 = new ImageView(this);
-				star3.setImageResource(R.drawable.star);
-				
-				Animation spin = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
-				//star1.startAnimation(spin);
-				//star2.startAnimation(spin);
-				//star3.startAnimation(spin);
-		        
-		        screenLayout = (RelativeLayout) findViewById(R.id.screen);
-		        
-		        screenLayout.addView(star1);
-		        screenLayout.addView(star2);
-		        screenLayout.addView(star3);
-		        star1.setY(1115);
-		        star1.setX(10);
-		        star2.setY(1115);
-		        star2.setX(65);
-		        star3.setY(1115);
-		        star3.setX(120);
+	public void makeStar() {
+	ImageView star = new ImageView(this);
+	star.setImageResource(R.drawable.star);
+	Point pt = randomPointGenerator();
+	star.setX(pt.x);
+	star.setY(pt.y);
+	screenLayout.addView(star);
+	starList.add(star);
+	//Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
+    //star.startAnimation(animation);
+	RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
+	rotate.setDuration(Math.abs(Animation.INFINITE));
+	star.startAnimation(rotate);
 	}
 
 	public void runButtons() {
@@ -258,7 +263,7 @@ public class MainActivity extends Activity implements ViewFactory {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.topMargin -= 10;
+				mParams.topMargin -= 30;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -276,7 +281,7 @@ public class MainActivity extends Activity implements ViewFactory {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.topMargin += 10;
+				mParams.topMargin += 30;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -294,7 +299,7 @@ public class MainActivity extends Activity implements ViewFactory {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.leftMargin += 10;
+				mParams.leftMargin += 30;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
@@ -312,7 +317,7 @@ public class MainActivity extends Activity implements ViewFactory {
 				if (e.getAction() == MotionEvent.ACTION_DOWN) {
 				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
 						.getLayoutParams();
-				mParams.leftMargin -= 10;
+				mParams.leftMargin -= 30;
 				ghostBuster.setLayoutParams(mParams);
 				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
