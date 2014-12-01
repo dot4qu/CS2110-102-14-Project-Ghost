@@ -57,6 +57,8 @@ public class MainActivity extends Activity implements ViewFactory {
 	//Soundpool for sound effects
 	private SoundPool soundpool;
 	private int warning = 0;
+	private int kill = 0;
+	private int death = 0;
 
     //Text for Score textswitcher
     String textToShow[]={"Score: 0","Score: 1","Score: 2","Score: 3","Score: 4","Score: 5","Score: 6","Score: 7","Score: 8","Score: 9","Score: 10","Score: 11","Score: 12","Score: 13","Score: 14","Score: 15","Score: 16","Score: 17","Score: 18","Score: 19","Score: 20","Score: 21","Score: 22","Score: 23","Score: 24","Score: 25","Score: 26","Score: 27","Score: 28","Score: 29","Score: 30"};
@@ -86,6 +88,8 @@ public class MainActivity extends Activity implements ViewFactory {
 		//Sound effects
 		soundpool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
 		warning = soundpool.load(this, R.raw.warning , 1);
+		kill = soundpool.load(this, R.raw.kill , 1);
+		death = soundpool.load(this, R.raw.death, 1);
 
 		// Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
@@ -181,7 +185,6 @@ public class MainActivity extends Activity implements ViewFactory {
 			Log.d("dd", "side");
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
-			soundpool.autoPause();
 		}
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
 			current = current+1;
@@ -191,8 +194,10 @@ public class MainActivity extends Activity implements ViewFactory {
 			ghostList.remove(g);	//deletes the ghost
 			g.removeGhostImage();
 			g = null;
+			soundpool.play(kill, 1, 1, 0, 0, 1);
 		}
 		if (action.compareTo("ghost on top=kill buster") == 0) { 	//make buster lose a life or game over
+			soundpool.play(death, 1, 1, 0, 0, 1);
 			Log.d("dd", "dead");
 			/*if (lives == 1)
 				gameOn = false;
@@ -203,7 +208,6 @@ public class MainActivity extends Activity implements ViewFactory {
 				lives--;
 			}*/
 			finish();
-			
 		}
 	}
 
