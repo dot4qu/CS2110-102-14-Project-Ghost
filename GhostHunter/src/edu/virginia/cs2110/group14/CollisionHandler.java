@@ -41,12 +41,10 @@ public class CollisionHandler {
 				//ghost is higher
 				if (ghostBox.centerY() < busterBox.centerY()) {
 					intersection = new Rect(ghostBox.left, busterBox.top, busterBox.right, ghostBox.bottom);
-					//Log.d("collision", "missing");
 				}
 				//buster is higher
 				else if (ghostBox.centerY() > busterBox.centerY()) {
 					intersection = new Rect(ghostBox.left, ghostBox.top, busterBox.right, busterBox.bottom);
-					//Log.d("collision", "expected");
 				}
 			}
 		}
@@ -72,7 +70,6 @@ public class CollisionHandler {
 				else if (ghostBox.centerX() > busterBox.centerX()) {	//ghost is on the right
 					ghost.setXCoord(ghost.getX() + intersection.width());
 				}
-				Log.d("dd", "side");
 				return "ghost on side";
 			}
 		

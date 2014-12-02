@@ -17,7 +17,6 @@ public class Ghost {
 		ghost = ghostImage;
 		ghost.setX(x);
 		ghost.setY(y);
-		Log.d("Ghost point", "GHOST  -- X: " + x + ", Y: " + y);
 		xVeloc = randomInitialVelocity();
 		yVeloc = randomInitialVelocity();
 	}

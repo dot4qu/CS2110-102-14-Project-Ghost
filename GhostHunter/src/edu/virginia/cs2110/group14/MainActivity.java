@@ -145,6 +145,7 @@ public class MainActivity extends Activity implements ViewFactory {
 				for (int j = 0; j < starList.size(); j++) {
 					starCollisionCheck(starList.get(j));
 				}
+				frame.removeCallbacks(r);
 				frame.postDelayed(r, 20);
 			}
 		};
@@ -179,14 +180,12 @@ public class MainActivity extends Activity implements ViewFactory {
 		String action = CollisionHandler.busterGhostCollisions(g, ghostBuster);
 		if (action.compareTo("ghost on side") == 0) {
 			g.changeVelocity(-g.getXVelocity(), g.getYVelocity()); //bounces ghost off
-			Log.d("dd", "side");
 			// sound warning that ghost is close
 			soundpool.play(warning, 1, 1, 0, 0, 1);
 		}
 		
 		if (action.compareTo("ghost on bottom=kill ghost") == 0) {
 			screenLayout.removeView(g.getGhostImage());
-			Log.d("dd", "kill");
 			ghostList.remove(g);	//deletes the ghost
 			g.removeGhostImage();
 			g = null;
@@ -195,6 +194,8 @@ public class MainActivity extends Activity implements ViewFactory {
 		}
 		if (action.compareTo("ghost on top=kill buster") == 0) { 	//make buster lose a life or game over
 			soundpool.play(death, 1, 1, 0, 0, 1);
+			frame.removeCallbacks(r);
+			
 			/*if (lives == 1)
 				gameOn = false;
 			else {
@@ -253,7 +254,6 @@ public class MainActivity extends Activity implements ViewFactory {
 						.getLayoutParams();
 				mParams.topMargin -= 30;
 				ghostBuster.setLayoutParams(mParams);
-				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
@@ -271,7 +271,6 @@ public class MainActivity extends Activity implements ViewFactory {
 						.getLayoutParams();
 				mParams.topMargin += 30;
 				ghostBuster.setLayoutParams(mParams);
-				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
@@ -289,7 +288,6 @@ public class MainActivity extends Activity implements ViewFactory {
 						.getLayoutParams();
 				mParams.leftMargin += 30;
 				ghostBuster.setLayoutParams(mParams);
-				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
@@ -307,7 +305,6 @@ public class MainActivity extends Activity implements ViewFactory {
 						.getLayoutParams();
 				mParams.leftMargin -= 30;
 				ghostBuster.setLayoutParams(mParams);
-				Log.d("buster", "postion x: " + ghostBuster.getX() + " position y: " + ghostBuster.getY());
 				return true;
 				}
 				return false;
