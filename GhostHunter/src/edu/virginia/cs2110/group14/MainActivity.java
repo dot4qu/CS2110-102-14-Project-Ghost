@@ -41,6 +41,7 @@ public class MainActivity extends Activity implements ViewFactory {
 
 	private Handler frame = new Handler();
 	private ImageView ghostBuster;
+	private ImageView bat;
 	private Runnable r;
 	private ArrayList<Ghost> ghostList;
 	private int initialNumGhosts;
@@ -57,7 +58,7 @@ public class MainActivity extends Activity implements ViewFactory {
 	private int warning = 0;
 	private int kill = 0;
 	private int death = 0;
-
+    private int point = 0;
     //Text for Score textswitcher
     String[] textToShow={"Score: 0","Score: 1","Score: 2","Score: 3","Score: 4","Score: 5","Score: 6","Score: 7","Score: 8","Score: 9","Score: 10","Score: 11","Score: 12","Score: 13","Score: 14","Score: 15","Score: 16","Score: 17","Score: 18","Score: 19","Score: 20","Score: 21","Score: 22","Score: 23","Score: 24","Score: 25","Score: 26","Score: 27","Score: 28","Score: 29","Score: 30"};
     int textCount=textToShow.length;
@@ -89,6 +90,7 @@ public class MainActivity extends Activity implements ViewFactory {
 		warning = soundpool.load(this, R.raw.warning , 1);
 		kill = soundpool.load(this, R.raw.kill , 1);
 		death = soundpool.load(this, R.raw.death, 1);
+		point = soundpool.load(this, R.raw.point, 1);
 
 		// Music
 		MediaPlayer gameMusic = MediaPlayer.create(MainActivity.this, R.raw.gamesound);
@@ -100,6 +102,11 @@ public class MainActivity extends Activity implements ViewFactory {
 		
 		// sets up ghostbuster image
 		ghostBuster = (ImageView) findViewById(R.id.ghostbuster);
+
+		//Set up animated bat
+		bat = (ImageView) findViewById(R.id.bat);
+		Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
+		bat.startAnimation(animation);
 
 		// checks the difficulty level and sets the number of ghosts accordingly
 		difficultyLevel = getDifficultyLevel();
@@ -212,6 +219,7 @@ public class MainActivity extends Activity implements ViewFactory {
 		Rect busterBox = new Rect(ghostBuster.getLeft(), ghostBuster.getTop(), ghostBuster.getRight(), ghostBuster.getBottom());
 		Rect starBox = new Rect((int) star.getX(),(int) star.getY(),(int) star.getX() + star.getWidth(),(int) star.getY() + star.getHeight());
 		if (Rect.intersects(busterBox, starBox)) {
+			soundpool.play(point, 1, 1, 0, 0, 1);
 			screenLayout.removeView(star);
 			starList.remove(star);
 			current++;
@@ -235,11 +243,8 @@ public class MainActivity extends Activity implements ViewFactory {
 	Point pt = randomPointGenerator();
 	star.setX(pt.x);
 	star.setY(pt.y);
-	//Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate_center);
-    //star.startAnimation(animation);
 	screenLayout.addView(star);
 	starList.add(star);
-	
 	}
 
 	public void runButtons() {

@@ -5,10 +5,7 @@
     <rotate
         android:duration="2500"
         android:interpolator="@android:anim/linear_interpolator"
-        android:pivotX="50%"
-        android:pivotY="50%"
         android:repeatCount="infinite"
         android:repeatMode="restart"
-        android:fromDegrees="0"
-        android:toDegrees="3600" />
+        android:toDegrees="360" />
 </set>
