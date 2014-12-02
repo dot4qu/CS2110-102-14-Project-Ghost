@@ -131,7 +131,6 @@ public class MainActivity extends Activity implements ViewFactory {
 	
 
 	 public View makeView() {
-        // TODO Auto-generated method stub
         TextView myText = new TextView(MainActivity.this);
         myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
         myText.setTextSize(24);
@@ -161,7 +160,7 @@ public class MainActivity extends Activity implements ViewFactory {
 
 	public Point randomPointGenerator() {
 		Point screen = getScreenSize();
-		int x = (int) Math.abs(Math.random() * (screen.x - 100));
+		int x = (int) Math.abs(Math.random() * (screen.x - 120));
 		int y = (int) Math.abs(Math.random() * (screen.y - 290));
 		Point p = new Point(x, y);
 		return p;
@@ -199,18 +198,8 @@ public class MainActivity extends Activity implements ViewFactory {
 			g = null;
 			makeStar();
 		}
-		if (action.compareTo("ghost on top=kill buster") == 0) { 	//make buster lose a life or game over
+		if (action.compareTo("ghost on top=kill buster") == 0) { 	//game over
 			soundpool.release();
-			//frame.removeCallbacks(r);
-			
-			/*if (lives == 1)
-				gameOn = false;
-			else {
-				ghostBuster.setX(screenDimensions.x / 2);
-				ghostBuster.setY(screenDimensions.y / 2);
-				ghostBuster.postInvalidate();
-				lives--;
-			}*/
 			finish();
 		}
 	}
