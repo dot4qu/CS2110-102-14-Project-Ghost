@@ -242,68 +242,139 @@ public class MainActivity extends Activity implements ViewFactory {
 		Button up = (Button) findViewById(R.id.up_button);
 		up.setOnTouchListener(new View.OnTouchListener() {
 
-			@Override
-			public boolean onTouch(View v, MotionEvent e) {
-				if (e.getAction() == MotionEvent.ACTION_DOWN) {
-				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
-						.getLayoutParams();
-				mParams.topMargin -= 30;
-				ghostBuster.setLayoutParams(mParams);
-				return true;
-				}
-				return false;
-			}
+			private Handler mHandler;
+
+		    @Override public boolean onTouch(View v, MotionEvent event) {
+		        switch(event.getAction()) {
+		        case MotionEvent.ACTION_DOWN:
+		            if (mHandler != null) return true;
+		            mHandler = new Handler();
+		            mHandler.postDelayed(mAction, 100);
+		            break;
+		        case MotionEvent.ACTION_UP:
+		            if (mHandler == null) return true;
+		            mHandler.removeCallbacks(mAction);
+		            mHandler = null;
+		            break;
+		        }
+		        return false;
+		    }
+
+		    Runnable mAction = new Runnable() {
+		        @Override public void run() {
+		        	RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
+							.getLayoutParams();
+					mParams.topMargin -= 30;
+					ghostBuster.setLayoutParams(mParams);
+		            mHandler.postDelayed(this, 100);
+		        }
+		    };
+
 		});
+					
+	
+				
 
 		// beginning of DOWN button implementation
 		Button down = (Button) findViewById(R.id.down_button);
 		down.setOnTouchListener(new View.OnTouchListener() {
 
-			@Override
-			public boolean onTouch(View v, MotionEvent e) {
-				if (e.getAction() == MotionEvent.ACTION_DOWN) {
-				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
-						.getLayoutParams();
-				mParams.topMargin += 30;
-				ghostBuster.setLayoutParams(mParams);
-				return true;
-				}
-				return false;
-			}
+			private Handler mHandler;
+
+		    @Override public boolean onTouch(View v, MotionEvent event) {
+		        switch(event.getAction()) {
+		        case MotionEvent.ACTION_DOWN:
+		            if (mHandler != null) return true;
+		            mHandler = new Handler();
+		            mHandler.postDelayed(mAction, 100);
+		            break;
+		        case MotionEvent.ACTION_UP:
+		            if (mHandler == null) return true;
+		            mHandler.removeCallbacks(mAction);
+		            mHandler = null;
+		            break;
+		        }
+		        return false;
+		    }
+
+		    Runnable mAction = new Runnable() {
+		        @Override public void run() {
+		        	RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
+							.getLayoutParams();
+					mParams.topMargin += 30;
+					ghostBuster.setLayoutParams(mParams);
+		            mHandler.postDelayed(this, 100);
+		        }
+		    };
+
 		});
 
 		// beginning of RIGHT button implementation
 		Button right = (Button) findViewById(R.id.right_button);
 		right.setOnTouchListener(new View.OnTouchListener() {
 
-			@Override
-			public boolean onTouch(View v, MotionEvent e) {
-				if (e.getAction() == MotionEvent.ACTION_DOWN) {
-				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
-						.getLayoutParams();
-				mParams.leftMargin += 30;
-				ghostBuster.setLayoutParams(mParams);
-				return true;
-				}
-				return false;
-			}
+			private Handler mHandler;
+
+		    @Override public boolean onTouch(View v, MotionEvent event) {
+		        switch(event.getAction()) {
+		        case MotionEvent.ACTION_DOWN:
+		            if (mHandler != null) return true;
+		            mHandler = new Handler();
+		            mHandler.postDelayed(mAction, 100);
+		            break;
+		        case MotionEvent.ACTION_UP:
+		            if (mHandler == null) return true;
+		            mHandler.removeCallbacks(mAction);
+		            mHandler = null;
+		            break;
+		        }
+		        return false;
+		    }
+
+		    Runnable mAction = new Runnable() {
+		        @Override public void run() {
+		        	RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
+							.getLayoutParams();
+					mParams.leftMargin += 30;
+					ghostBuster.setLayoutParams(mParams);
+		            mHandler.postDelayed(this, 100);
+		        }
+		    };
+
 		});
 
 		// beginning of LEFT button implementation
 		Button left = (Button) findViewById(R.id.left_button);
 		left.setOnTouchListener(new View.OnTouchListener() {
 
-			@Override
-			public boolean onTouch(View v, MotionEvent e) {
-				if (e.getAction() == MotionEvent.ACTION_DOWN) {
-				RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
-						.getLayoutParams();
-				mParams.leftMargin -= 30;
-				ghostBuster.setLayoutParams(mParams);
-				return true;
-				}
-				return false;
-			}
+			private Handler mHandler;
+
+		    @Override public boolean onTouch(View v, MotionEvent event) {
+		        switch(event.getAction()) {
+		        case MotionEvent.ACTION_DOWN:
+		            if (mHandler != null) return true;
+		            mHandler = new Handler();
+		            mHandler.postDelayed(mAction, 100);
+		            break;
+		        case MotionEvent.ACTION_UP:
+		            if (mHandler == null) return true;
+		            mHandler.removeCallbacks(mAction);
+		            mHandler = null;
+		            break;
+		        }
+		        return false;
+		    }
+
+		    Runnable mAction = new Runnable() {
+		        @Override public void run() {
+		        	RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) ghostBuster
+							.getLayoutParams();
+					mParams.leftMargin -= 30;
+					ghostBuster.setLayoutParams(mParams);
+		            mHandler.postDelayed(this, 100);
+		        }
+		    };
+
 		});
 	}
 
